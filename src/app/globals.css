@@ -1359,10 +1359,93 @@ a {
 }
 
 @media (min-width: 769px) {
-  .desktop-only-ad {
+.desktop-only-ad {
     display: flex;
   }
 }
+
+/* Telegram Floating Button */
+.telegram-floating-btn {
+  position: fixed;
+  bottom: 80px; /* Safe space above mobile bottom nav */
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #0088cc 0%, #00b0ff 100%);
+  color: #ffffff;
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(0, 136, 204, 0.45), 0 0 12px rgba(0, 176, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: telegramGlowPulse 3s infinite alternate;
+}
+
+@keyframes telegramGlowPulse {
+  0% {
+    box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4), 0 0 0px rgba(0, 176, 255, 0);
+  }
+  100% {
+    box-shadow: 0 8px 28px rgba(0, 136, 204, 0.6), 0 0 15px rgba(0, 176, 255, 0.5);
+  }
+}
+
+.telegram-floating-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(135deg, #0099e6 0%, #24c3ff 100%);
+  color: #ffffff;
+  box-shadow: 0 12px 32px rgba(0, 136, 204, 0.65), 0 0 20px rgba(0, 242, 254, 0.6);
+}
+
+.telegram-floating-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.telegram-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.telegram-svg {
+  transition: transform 0.3s ease;
+}
+
+.telegram-floating-btn:hover .telegram-svg {
+  transform: rotate(-10deg) scale(1.1);
+}
+
+.telegram-btn-text {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.telegram-btn-subtext {
+  font-weight: 500;
+  opacity: 0.9;
+  font-size: 13px;
+}
+
+@media (min-width: 769px) {
+  .telegram-floating-btn {
+    bottom: 24px;
+    right: 24px;
+    padding: 12px 20px;
+    font-size: 15px;
+    gap: 8px;
+  }
+  .telegram-btn-subtext {
+    font-size: 14px;
+  }
+}
+
 
 
 

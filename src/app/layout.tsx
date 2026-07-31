@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import AdBanner from "@/components/AdBanner";
+import TelegramFloatingButton from "@/components/TelegramFloatingButton";
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -117,6 +118,7 @@ export default function RootLayout({
             <AdBanner />
           </main>
         </div>
+        <TelegramFloatingButton />
         {/* Microsoft Clarity */}
         <Script id="clarity-script" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
