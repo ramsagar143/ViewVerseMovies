@@ -6,7 +6,7 @@ import TelegramFloatingButton from "@/components/TelegramFloatingButton";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://viewversetv.netlify.app"),
+  metadataBase: new URL("https://viewverse.space"),
   title: {
     default: "ViewVerse - Watch Movies, TV Shows & Anime Online Free",
     template: "%s | ViewVerse",
@@ -33,12 +33,12 @@ export const metadata: Metadata = {
     "free TV shows",
     "movie streaming site",
     "ViewVerse",
-    "viewversetv.netlify.app",
+    "viewverse.space",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://viewversetv.netlify.app",
+    url: "https://viewverse.space",
     siteName: "ViewVerse",
     title: "ViewVerse - Watch Movies, TV Shows & Anime Online Free",
     description:
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     google: "a2TFH7POli_BcLon4TsyuagDySR3CYY_bNdWtO8fdX0",
   },
   alternates: {
-    canonical: "https://viewversetv.netlify.app",
+    canonical: "https://viewverse.space",
   },
 };
 
@@ -94,7 +94,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "ViewVerse",
-              url: "https://viewversetv.netlify.app",
+              url: "https://viewverse.space",
               description:
                 "Browse and stream trending movies, TV shows, anime and web series online for free.",
               potentialAction: {
@@ -102,7 +102,7 @@ export default function RootLayout({
                 target: {
                   "@type": "EntryPoint",
                   urlTemplate:
-                    "https://viewversetv.netlify.app/search?q={search_term_string}",
+                    "https://viewverse.space/search?q={search_term_string}",
                 },
                 "query-input": "required name=search_term_string",
               },
@@ -152,4 +152,3 @@ export default function RootLayout({
     </html>
   );
 }
-

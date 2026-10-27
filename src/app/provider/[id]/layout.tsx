@@ -15,11 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     title: `${name} - Browse Movies & TV Shows on ${name}`,
     description: `Browse and discover movies, TV shows, and anime available on ${name}. Filter by genre, year, and rating. Stream content from ${name} on ViewVerse.`,
     keywords: [name, `${name} movies`, `${name} TV shows`, `${name} streaming`, "OTT platform"],
-    alternates: { canonical: `https://viewversetv.netlify.app/provider/${id}` },
+    alternates: { canonical: `https://viewverse.space/provider/${id}` },
     openGraph: {
       title: `${name} - Movies & TV Shows | ViewVerse`,
       description: `Discover movies, TV shows, and anime on ${name}. Stream now on ViewVerse.`,
-      url: `https://viewversetv.netlify.app/provider/${id}`,
+      url: `https://viewverse.space/provider/${id}`,
     },
   };
 }

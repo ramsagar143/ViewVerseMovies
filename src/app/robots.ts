@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: "https://viewversetv.netlify.app/sitemap.xml",
-    host: "https://viewversetv.netlify.app",
+    sitemap: "https://viewverse.space/sitemap.xml",
+    host: "https://viewverse.space",
   };
 }

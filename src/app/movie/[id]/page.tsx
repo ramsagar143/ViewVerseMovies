@@ -31,11 +31,11 @@ export async function generateMetadata({ params }: MoviePageProps): Promise<Meta
     openGraph: {
       title: `${title}${year ? ` (${year})` : ""} - Watch Online Free | ViewVerse`,
       description: movie.overview?.slice(0, 200) || `Watch ${title} online for free.`,
-      url: `https://viewversetv.netlify.app/movie/${id}`,
+      url: `https://viewverse.space/movie/${id}`,
       type: "video.movie",
       images: posterUrl ? [{ url: posterUrl, width: 500, height: 750, alt: title }] : [],
     },
-    alternates: { canonical: `https://viewversetv.netlify.app/movie/${id}` },
+    alternates: { canonical: `https://viewverse.space/movie/${id}` },
   };
 }
 

@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "streaming platforms India",
     "OTT streaming services",
   ],
-  alternates: { canonical: "https://viewversetv.netlify.app/providers" },
+  alternates: { canonical: "https://viewverse.space/providers" },
   openGraph: {
     title: "Explore OTT Platforms - Netflix, Prime, Hotstar & More | ViewVerse",
     description: "Browse movies and shows from Netflix, Prime, Hotstar, Crunchyroll & 20+ OTT platforms.",
-    url: "https://viewversetv.netlify.app/providers",
+    url: "https://viewverse.space/providers",
   },
 };
 
