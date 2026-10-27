@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import AdBanner from "@/components/AdBanner";
@@ -71,7 +72,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "a2TFH7POli_BcLon4TsyuagDySR3CYY_bNdWtO8fdX0",
+    google: "7HAZMQqSuJV8VtwX2lQ-jql9nD2LpMDLWzci8At3SpI",
   },
   alternates: {
     canonical: "https://viewverse.space",
@@ -125,29 +126,9 @@ export default function RootLayout({
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window, document, "clarity", "script", "xe6a2jlp93");`}
+          })(window, document, "clarity", "script", "z4fa523ah3");`}
         </Script>
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-VP830LENEH"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-VP830LENEH');`}
-        </Script>
-        {/* Adsterra Popunder Script */}
-        <Script
-          src="https://interventioncopiedloitering.com/81/02/1a/81021a81026c7f83ac60e985567058be.js"
-          strategy="afterInteractive"
-        />
-        {/* Adsterra Socialbar Script */}
-        <Script
-          src="https://interventioncopiedloitering.com/c7/8c/51/c78c514ce0f6be9f06a8ccca81143361.js"
-          strategy="afterInteractive"
-        />
+        <Analytics />
       </body>
     </html>
   );

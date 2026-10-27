@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search as SearchIcon } from "lucide-react";
 import { getAnime, MovieOrShow } from "@/lib/tmdb";
@@ -65,7 +65,7 @@ export default function AnimePage() {
   }, [genre, year, rating]);
 
   // Fetch next page
-  const loadMoreAnime = async () => {
+  const loadMoreAnime = useCallback(async () => {
     if (page >= totalPages || loadingMore) return;
     setLoadingMore(true);
     try {
@@ -83,7 +83,7 @@ export default function AnimePage() {
     } finally {
       setLoadingMore(false);
     }
-  };
+  }, [genre, loadingMore, page, rating, totalPages, year]);
 
   const [loaderRef, setLoaderRef] = useState<HTMLDivElement | null>(null);
 
@@ -94,7 +94,7 @@ export default function AnimePage() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && page < totalPages && !loadingMore && !loading) {
-          loadMoreAnime();
+          void loadMoreAnime();
         }
       },
       { rootMargin: "300px" } // Pre-load 300px before hitting bottom
@@ -104,7 +104,7 @@ export default function AnimePage() {
     return () => {
       observer.disconnect();
     };
-  }, [loaderRef, page, totalPages, loadingMore, loading]);
+  }, [loaderRef, loadMoreAnime, page, totalPages, loadingMore, loading]);
 
   const router = useRouter();
   const [searchVal, setSearchVal] = useState("");

@@ -1,5 +1,62 @@
 const TMDB_READ_TOKEN = process.env.TMDB_READ_TOKEN || "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5OTE0YTcxMzA0ZjYzOTQwN2MwM2Y4M2Q1NDM0ZTRkZiIsIm5iZiI6MTc4MTQyMzM2MC45MzUwMDAyLCJzdWIiOiI2YTJlNWQwMDdiNGIzZGE5MjkyYzdkOGYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.tUeErUxVysPcVgmlxo63zkcKpJggQRmD-kUY3HqvY6k";
 const BASE_URL = "https://api.themoviedb.org/3";
+const TMDB_CACHE_TTL_SECONDS = 60 * 60 * 6;
+const BROWSER_CACHE_TTL_MS = 1000 * 60 * 10;
+
+const tmdbCache = ((globalThis as typeof globalThis & {
+  __viewVerseTmdbCache?: Map<string, { expiresAt: number; value: unknown }>
+}).__viewVerseTmdbCache ??= new Map<string, { expiresAt: number; value: unknown }>());
+
+const inflightRequests = new Map<string, Promise<unknown>>();
+
+function getCacheKey(endpoint: string, params: Record<string, string | number | boolean>) {
+  const query = new URLSearchParams();
+
+  Object.entries(params)
+    .filter(([, value]) => value !== undefined && value !== null && value !== "")
+    .sort(([left], [right]) => left.localeCompare(right))
+    .forEach(([key, value]) => {
+      query.append(key, String(value));
+    });
+
+  const queryString = query.toString();
+  return `${endpoint}${queryString ? `?${queryString}` : ""}`;
+}
+
+function readBrowserCache<T>(key: string): T | null {
+  if (typeof window === "undefined" || !window.localStorage) return null;
+
+  try {
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw) as { expiresAt: number; value: T };
+    if (!parsed || typeof parsed.expiresAt !== "number") return null;
+
+    if (Date.now() > parsed.expiresAt) {
+      window.localStorage.removeItem(key);
+      return null;
+    }
+
+    return parsed.value;
+  } catch {
+    return null;
+  }
+}
+
+function writeBrowserCache<T>(key: string, value: T) {
+  if (typeof window === "undefined" || !window.localStorage) return;
+
+  try {
+    window.localStorage.setItem(key, JSON.stringify({
+      expiresAt: Date.now() + BROWSER_CACHE_TTL_MS,
+      value,
+    }));
+  } catch {
+    // localStorage quota or privacy mode can reject; ignore silently.
+  }
+}
+
 export const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p";
 
 export interface MovieOrShow {
@@ -72,24 +129,46 @@ export interface SeasonDetail {
 }
 
 export async function fetchFromTMDB(endpoint: string, params: Record<string, string | number | boolean> = {}) {
-  // If running in browser (client-side), proxy through the local API route
+  const cacheKey = getCacheKey(endpoint, params);
+
   if (typeof window !== "undefined") {
-    const url = new URL("/api/tmdb", window.location.origin);
-    url.searchParams.append("endpoint", endpoint);
-    url.searchParams.append("params", JSON.stringify(params));
+    const cached = readBrowserCache<unknown>(cacheKey);
+    if (cached !== null) return cached;
 
-    const response = await fetch(url.toString(), {
-      method: "GET",
-    });
+    const inFlight = inflightRequests.get(cacheKey);
+    if (inFlight) return await inFlight as never;
 
-    if (!response.ok) {
-      throw new Error(`API proxy fetch failed for endpoint ${endpoint}: ${response.statusText}`);
+    const request = (async () => {
+      const url = new URL("/api/tmdb", window.location.origin);
+      url.searchParams.append("endpoint", endpoint);
+      url.searchParams.append("params", JSON.stringify(params));
+
+      const response = await fetch(url.toString(), { method: "GET" });
+      if (!response.ok) {
+        throw new Error(`API proxy fetch failed for endpoint ${endpoint}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      writeBrowserCache(cacheKey, data);
+      return data;
+    })();
+
+    inflightRequests.set(cacheKey, request as Promise<unknown>);
+    try {
+      return await request;
+    } finally {
+      inflightRequests.delete(cacheKey);
     }
-
-    return response.json();
   }
 
-  // Server-side direct fetching
+  const cachedServerValue = tmdbCache.get(cacheKey);
+  if (cachedServerValue && Date.now() < cachedServerValue.expiresAt) {
+    return cachedServerValue.value as never;
+  }
+
+  const inFlightServerRequest = inflightRequests.get(cacheKey);
+  if (inFlightServerRequest) return await inFlightServerRequest as never;
+
   const url = new URL(`${BASE_URL}${endpoint}`);
   Object.entries(params).forEach(([key, val]) => {
     if (val !== undefined && val !== null && val !== "") {
@@ -97,20 +176,35 @@ export async function fetchFromTMDB(endpoint: string, params: Record<string, str
     }
   });
 
-  const response = await fetch(url.toString(), {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${TMDB_READ_TOKEN}`,
-    },
-    next: { revalidate: 3600 }, // Cache responses for 1 hour in Next.js
-  });
+  const request = (async () => {
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${TMDB_READ_TOKEN}`,
+      },
+      next: { revalidate: TMDB_CACHE_TTL_SECONDS },
+    });
 
-  if (!response.ok) {
-    throw new Error(`TMDB fetch failed for endpoint ${endpoint}: ${response.statusText}`);
+    if (!response.ok) {
+      throw new Error(`TMDB fetch failed for endpoint ${endpoint}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    tmdbCache.set(cacheKey, {
+      expiresAt: Date.now() + (TMDB_CACHE_TTL_SECONDS * 1000),
+      value: data,
+    });
+
+    return data;
+  })();
+
+  inflightRequests.set(cacheKey, request as Promise<unknown>);
+  try {
+    return await request;
+  } finally {
+    inflightRequests.delete(cacheKey);
   }
-
-  return response.json();
 }
 
 export async function getTrending(type: "all" | "movie" | "tv" = "all", timeWindow: "day" | "week" = "day") {

@@ -10,11 +10,11 @@ export async function GET(request: NextRequest) {
     return Response.json({ error: "Missing endpoint parameter" }, { status: 400 });
   }
 
-  let params = {};
+  let params: Record<string, string | number | boolean> = {};
   if (paramsStr) {
     try {
-      params = JSON.parse(paramsStr);
-    } catch (e) {
+      params = JSON.parse(paramsStr) as Record<string, string | number | boolean>;
+    } catch {
       return Response.json({ error: "Invalid params format" }, { status: 400 });
     }
   }
@@ -22,10 +22,11 @@ export async function GET(request: NextRequest) {
   try {
     const data = await fetchFromTMDB(endpoint, params);
     return Response.json(data);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to fetch from TMDB";
     console.error("Proxy TMDB error:", error);
     return Response.json(
-      { error: error.message || "Failed to fetch from TMDB" },
+      { error: message },
       { status: 500 }
     );
   }
