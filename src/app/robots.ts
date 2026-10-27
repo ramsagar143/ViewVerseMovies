@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: "https://view-verse-chi.vercel.app/sitemap.xml",
-    host: "https://view-verse-chi.vercel.app",
+    sitemap: "https://viewversetv.netlify.app/sitemap.xml",
+    host: "https://viewversetv.netlify.app",
   };
 }

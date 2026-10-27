@@ -6,7 +6,7 @@ import TelegramFloatingButton from "@/components/TelegramFloatingButton";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://view-verse-chi.vercel.app"),
+  metadataBase: new URL("https://viewversetv.netlify.app"),
   title: {
     default: "ViewVerse - Watch Movies, TV Shows & Anime Online Free",
     template: "%s | ViewVerse",
@@ -33,12 +33,12 @@ export const metadata: Metadata = {
     "free TV shows",
     "movie streaming site",
     "ViewVerse",
-    "view-verse-chi.vercel.app",
+    "viewversetv.netlify.app",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://view-verse-chi.vercel.app",
+    url: "https://viewversetv.netlify.app",
     siteName: "ViewVerse",
     title: "ViewVerse - Watch Movies, TV Shows & Anime Online Free",
     description:
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     google: "a2TFH7POli_BcLon4TsyuagDySR3CYY_bNdWtO8fdX0",
   },
   alternates: {
-    canonical: "https://view-verse-chi.vercel.app",
+    canonical: "https://viewversetv.netlify.app",
   },
 };
 
@@ -94,7 +94,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "ViewVerse",
-              url: "https://view-verse-chi.vercel.app",
+              url: "https://viewversetv.netlify.app",
               description:
                 "Browse and stream trending movies, TV shows, anime and web series online for free.",
               potentialAction: {
@@ -102,7 +102,7 @@ export default function RootLayout({
                 target: {
                   "@type": "EntryPoint",
                   urlTemplate:
-                    "https://view-verse-chi.vercel.app/search?q={search_term_string}",
+                    "https://viewversetv.netlify.app/search?q={search_term_string}",
                 },
                 "query-input": "required name=search_term_string",
               },

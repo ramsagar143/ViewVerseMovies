@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "ViewVerse - Watch Movies, TV Shows & Anime Online Free | Your Passport to Diverse Entertainment",
   description:
     "Discover trending movies, TV shows, anime, and web series on ViewVerse. Stream Bollywood, Hollywood, Korean dramas, Japanese anime from Netflix, Amazon Prime, JioHotstar & 20+ OTT platforms. Updated daily.",
-  alternates: { canonical: "https://view-verse-chi.vercel.app" },
+  alternates: { canonical: "https://viewversetv.netlify.app" },
 };
 
 export const revalidate = 3600; // Revalidate home page data every hour

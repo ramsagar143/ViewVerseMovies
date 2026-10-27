@@ -4,11 +4,11 @@ export const metadata: Metadata = {
   title: "Search Movies, TV Shows & Anime",
   description:
     "Search from thousands of movies, TV shows, and anime on ViewVerse. Find any movie, series, or anime instantly. Powered by TMDB.",
-  alternates: { canonical: "https://view-verse-chi.vercel.app/search" },
+  alternates: { canonical: "https://viewversetv.netlify.app/search" },
   openGraph: {
     title: "Search Movies, TV Shows & Anime | ViewVerse",
     description: "Search from thousands of movies, TV shows, and anime instantly.",
-    url: "https://view-verse-chi.vercel.app/search",
+    url: "https://viewversetv.netlify.app/search",
   },
 };
 

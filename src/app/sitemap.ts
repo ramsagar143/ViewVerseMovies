@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getTrending, getAnime, OTT_PROVIDERS } from "@/lib/tmdb";
 
-const BASE_URL = "https://view-verse-chi.vercel.app";
+const BASE_URL = "https://viewversetv.netlify.app";
 
 export const revalidate = 3600; // Regenerate sitemap every hour
 

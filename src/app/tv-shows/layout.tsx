@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     "best web series",
     "drama series",
   ],
-  alternates: { canonical: "https://view-verse-chi.vercel.app/tv-shows" },
+  alternates: { canonical: "https://viewversetv.netlify.app/tv-shows" },
   openGraph: {
     title: "Explore TV Shows - Trending Series & Web Shows | ViewVerse",
     description:
       "Browse trending TV shows, web series, Korean dramas and more. Filter by genre, language and year.",
-    url: "https://view-verse-chi.vercel.app/tv-shows",
+    url: "https://viewversetv.netlify.app/tv-shows",
   },
 };
 

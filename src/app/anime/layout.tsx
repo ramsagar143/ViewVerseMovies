@@ -18,12 +18,12 @@ export const metadata: Metadata = {
     "best anime 2026",
     "Crunchyroll anime",
   ],
-  alternates: { canonical: "https://view-verse-chi.vercel.app/anime" },
+  alternates: { canonical: "https://viewversetv.netlify.app/anime" },
   openGraph: {
     title: "Explore Anime - Japanese Animation & Manga Series | ViewVerse",
     description:
       "Discover popular anime series. One Piece, Naruto, Dragon Ball, Attack on Titan and more.",
-    url: "https://view-verse-chi.vercel.app/anime",
+    url: "https://viewversetv.netlify.app/anime",
   },
 };
 

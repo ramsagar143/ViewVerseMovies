@@ -15,12 +15,12 @@ export const metadata: Metadata = {
     "new movies 2026",
     "watch movies free",
   ],
-  alternates: { canonical: "https://view-verse-chi.vercel.app/movies" },
+  alternates: { canonical: "https://viewversetv.netlify.app/movies" },
   openGraph: {
     title: "Explore Movies - Bollywood, Hollywood & More | ViewVerse",
     description:
       "Browse the largest collection of movies. Filter by genre, language, year and rating.",
-    url: "https://view-verse-chi.vercel.app/movies",
+    url: "https://viewversetv.netlify.app/movies",
   },
 };
 
